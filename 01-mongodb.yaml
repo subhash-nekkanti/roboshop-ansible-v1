@@ -4,7 +4,7 @@
   tasks:
   - name: copy mongodb repo files
     copy:
-      sec: mongo.repo
+      src: mongo.repo
       dest: /etc/yum.repos.d/mongo.repo
   - name: test inventory vars from group vars 
     debug:
