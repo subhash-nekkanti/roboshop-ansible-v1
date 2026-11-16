@@ -15,7 +15,6 @@
       security_groups:
       - Roboshop-common
       - "roboshop-{{ item }}"
-      wait: true
       region: us-east-1
     loop: "{{ instances }}"
     when: action == "create"
@@ -33,7 +32,6 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].private_ip_address}}"
-      wait: true
       overwrite: true
     loop: "{{ ec2_output.results }}"
     when: action == "create"
