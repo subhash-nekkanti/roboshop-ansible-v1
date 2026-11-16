@@ -19,8 +19,8 @@
 
   - name: set root password
     ansible.mysql.mysql_user:
-        name: root
-        host: local host
-        password: "{{ mysql_root_password }}"
-        check_implicit_admin: true
-        state: present
+      name: root
+      host: local host
+      password: "{{ mysql_root_password }}"
+      check_implicit_admin: true
+      state: present
