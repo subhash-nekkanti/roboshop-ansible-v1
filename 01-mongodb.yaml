@@ -13,12 +13,18 @@
 
   - name: install mongodb serever
     package: 
-      name: mongodb-org
+      name: mongodb-org 
       state: present
 
   - name: start and enable mongodb
     service:
-      name: mongodb
+      name: mongod
       state: started
       enabled: yes
+    
+  - name: allow remote connections
+    replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
 
