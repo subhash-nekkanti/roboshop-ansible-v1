@@ -27,6 +27,3 @@
     service:
       name: redis
       state: restarted
-
-systemctl enable redis
-systemctl start redis
