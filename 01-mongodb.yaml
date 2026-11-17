@@ -28,10 +28,9 @@
       regexp: '127.0.0.1'
       replace: '0.0.0.0'
 
-  - name: enable redis
+  - name: restart mongodb
     service:
-      name: redis
-      state: started
-      enabled: yes
+      name: mongod
+      state: restarted
 
 
