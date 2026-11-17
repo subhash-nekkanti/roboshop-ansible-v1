@@ -49,3 +49,21 @@
       dest: /app
       remote_src: yes #file already exists on remote server   (remote machine == catalogue )
 #if remote_src: no then ansible tries to unarchive the file from its server 
+  - name: install nodejs dependencies network_performance_options
+    community.general.npm:
+      path: /app
+
+  - name: configure systemd service 
+    template:   #if we use copy module the value will not be submitted in place of variable set in catalogue.service({{ mongodb_host }})
+      src: catalogue.service.j2
+      dest: /etc/systemd/system/catalogue.service
+
+  - name: copy mongo repo
+    copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: install mongodb client_token
+    dnf:
+      name: mongodb-mongodh
+      state: present 
