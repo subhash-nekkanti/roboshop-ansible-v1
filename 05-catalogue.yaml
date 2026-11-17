@@ -65,5 +65,5 @@
 
   - name: install mongodb client_token
     dnf:
-      name: mongodb-mongodh
+      name: mongodb-mongosh
       state: present 
