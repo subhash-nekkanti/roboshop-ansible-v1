@@ -2,6 +2,8 @@
   connection: local
   hosts: local
   vars:
+  #ansible-playbook roboshop.yaml -e "instance=catalogue"
+  #ansible-playbook roboshop.yaml -e "action=delete"
     instances: ["mongodb", "redis", "mysql", "rabbitmq"]
     action: create
     domain_name: devops92s.shop
