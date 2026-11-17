@@ -9,7 +9,9 @@
     
   - name: install rabbitmq server
     package:
-      name: rabbitmq-server
+      name:
+      - erlang
+      - rabbitmq-server
       state: present
 
   - name: enable and start rabbitmq server
