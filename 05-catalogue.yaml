@@ -37,3 +37,8 @@
     file:
       path: /app
       state: directory
+
+  - name: download catalogue application
+    get_url:
+      url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
+      dest: /tmp/catalogue.zip 
