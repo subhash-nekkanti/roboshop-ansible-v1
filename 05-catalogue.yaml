@@ -47,4 +47,5 @@
     unarchive:
       src: /tmp/catalogue.zip 
       dest: /app
-
+      remote_src: yes #file already exists on remote server   (remote machine == catalogue )
+#if remote_src: no then ansible tries to unarchive the file from its server 
