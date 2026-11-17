@@ -22,3 +22,18 @@
       create_home: false  
       comment: "roboshop system user"
       state: present
+
+  - name: remove app directory  #remove /app directory and all the content present in directory and create new
+    file:
+      path: /app
+      state: absent
+  
+  - name: remove catalogue.zip #remove existing content in catalogue.zip
+    file:
+      path: /tmp/catalogue.zip
+      state: absent
+
+  - name: create app directory
+    file:
+      path: /app
+      state: directory
