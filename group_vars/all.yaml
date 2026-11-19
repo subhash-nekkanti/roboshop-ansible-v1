@@ -3,7 +3,12 @@ ansible_password: DevOps321
 mysql_root_password: RoboShop@1
 
 mongodb_host: mongodb.devops92s.shop
-
 redis_host: redis.devops92s.shop
+mysql_host: mysql.devops92s.shop
+rabbitmq_host: rabbitmq.devops92s.shop
 catalogue_host: catalogue.devops92s.shop
+user_host: user.devops92s.shop
+cart_host: cart.devops92s.shop
+shipping_host: shipping.devops92s.shop
+payment_host: payment.devops92s.shop
 
