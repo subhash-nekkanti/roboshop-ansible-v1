@@ -12,5 +12,5 @@ cart_host: cart.devops92s.shop
 shipping_host: shipping.devops92s.shop
 payment_host: payment.devops92s.shop
 
-mysql_root_password: RoboShop@1
+
 
