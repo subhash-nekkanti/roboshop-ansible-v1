@@ -38,7 +38,19 @@
     loop: "{{ ec2_output.results }}"
     when: action == "create"
 
-  - name: delete route-53 record 
+  - name: create R53 record for frontend
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      record: "{{ domain_name }}" # daws92s.store points to frontend public IP
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}"
+      overwrite: true
+    loop: "{{ ec2_output.results }}"
+    when: action == "create" and item.item == "frontend"
+
+  - name: delete route-53 records
     amazon.aws.route53:
       state: absent
       zone: "{{ domain_name }}"
@@ -47,6 +59,15 @@
       ttl: 1
       wait: false
     loop: "{{ instances }}"
+    when: action == "delete"
+
+  - name: delete R53 record for frontend
+    amazon.aws.route53:
+      state: absent
+      zone: "{{ domain_name }}"
+      record: "{{ domain_name }}"
+      ttl: 1
+      type: A
     when: action == "delete"
 
   - name: delete ec2 instance
