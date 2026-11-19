@@ -1,4 +1,4 @@
-- name: configure user server
+- name: configure cart server
   hosts: cart
   become: yes
   tasks:
