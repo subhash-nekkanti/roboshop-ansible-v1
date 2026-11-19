@@ -1,0 +1,70 @@
+- name: configure user server
+  hosts: cart
+  become: yes
+  tasks:
+  - name: disable nodejs
+    command: dnf module disable nodejs -y
+  
+  - name: enable nodejs 24
+    command: dnf module enable nodejs:24 -y
+  
+  - name: install node js 24
+    dnf:   #when we already know its dnf we can directly use dnf: module. ansible directly executed without searching for os(like dnf for redhat ...etc)
+      name: nodejs 
+      state: present
+  
+  - name: create nodejs application cart
+    ansible.builtin.cart:
+      name: roboshop
+      system: true
+      shell: /sbin/nologin
+      home: /app
+      create_home: false  
+      comment: "roboshop system cart"
+      state: present
+
+  - name: remove app directory  #remove /app directory and all the content present in directory and create new
+    file:
+      path: /app
+      state: absent
+  
+  - name: remove cart.zip #remove existing content in cart.zip
+    file:
+      path: /tmp/cart.zip
+      state: absent
+
+  - name: create app directory
+    file:
+      path: /app
+      state: directory
+
+  - name: download cart application
+    get_url:
+      url: https://raw.githubcartcontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/cart-v4.zip
+      dest: /tmp/cart.zip 
+  
+  - name: unzip cart
+    unarchive:
+      src: /tmp/cart.zip 
+      dest: /app
+      remote_src: yes #file already exists on remote server   (remote machine == cart )
+#if remote_src: no then ansible tries to unarchive the file from its server 
+  - name: install nodejs dependencies 
+    community.general.npm:
+      path: /app
+
+  - name: configure systemd service 
+    template:   #if we use copy module the value will not be submitted in place of variable set in cart.service({{ mongodb_host }})
+      src: cart.service.j2
+      dest: /etc/systemd/system/cart.service
+
+  - name: deamon reload
+    systemd_service:
+      daemon_reload: yes
+
+  - name: start and enable cart
+    service:
+      name: cart
+      state: restarted
+      enabled: yes
+    

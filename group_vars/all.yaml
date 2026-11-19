@@ -5,3 +5,5 @@ mysql_root_password: RoboShop@1
 mongodb_host: mongodb.devops92s.shop
 
 redis_host: redis.devops92s.shop
+catalogue_host: catalogue.devops92s.shop
+
