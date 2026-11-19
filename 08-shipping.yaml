@@ -11,3 +11,60 @@
       - maven
       - java-25-openjdk-devel
       state: present
+    
+  - name: find java 25 path
+    shell: readlink -f  $(ls /usr/lib/jvm/java-25-openjdk*/bin/java | head -1)
+    register: java25
+
+  - name: print java 25 path
+    debug: 
+      msg: "{{ java25 }}"
+    
+  - name: make java 25 as default
+    command: alternatives --set java {{ java25 stdout }}
+
+  - name: set JAVA_HOME
+    copy:
+      content: "export JAVA_HOME={{ java25.stdout | dirname | dirname  }}"
+      dest: /etc/profile.d/java.sh  
+
+  - name: create roboshop application user
+    ansible.builtin.user:
+      name: roboshop
+      system: true
+      shell: /sbin/nologin
+      home: /app
+      create_home: false  
+      comment: "roboshop system user"
+      state: present
+
+  - name: remove app directory  
+    file:
+      path: /app
+      state: absent
+  
+  - name: remove shipping.zip 
+    file:
+      path: /tmp/shipping.zip
+      state: absent
+
+  - name: create app directory
+    file:
+      path: /app
+      state: directory
+
+  - name: download shipping application
+    get_url:
+      url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/shipping-v4.zip
+      dest: /tmp/shipping.zip 
+  
+  - name: unzip shipping
+    unarchive:
+      src: /tmp/shipping.zip 
+      dest: /app
+      remote_src: yes 
+  
+  - name: install dependencies
+    command: mvn clean package
+    args:
+      chdir: /app

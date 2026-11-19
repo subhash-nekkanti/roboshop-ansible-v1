@@ -13,7 +13,7 @@
       name: nodejs 
       state: present
   
-  - name: create nodejs application user
+  - name: create roboshop application user
     ansible.builtin.user:
       name: roboshop
       system: true
