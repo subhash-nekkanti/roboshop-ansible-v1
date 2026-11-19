@@ -13,8 +13,8 @@ user_host: user.devops92s.shop
 cart_host: cart.devops92s.shop
 shipping_host: shipping.devops92s.shop
 payment_host: payment.devops92s.shop
+frontend_host: frontend.devops92s.shop
 
-mysql_root_password: RoboShop@1
 shipping_db_user: shipping
 shipping_db_password: RoboShop@1
 rabbitmq_user: roboshop
