@@ -21,7 +21,7 @@
       msg: "{{ java25 }}"
     
   - name: make java 25 as default
-    command: alternatives --set java {{ java25 stdout }}
+    command: alternatives --set java {{ java25.stdout }}
 
   - name: set JAVA_HOME
     copy:
