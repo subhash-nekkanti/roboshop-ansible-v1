@@ -10,6 +10,11 @@
       name: nginx
       state: present
 
+  - name: copy roboshop config
+    template:
+      src: roboshop.conf.j2
+      dest: /etc/nginx/default.d/roboshop.conf
+
   - name: start and enable nginx
     service:
       name: nginx
@@ -45,20 +50,10 @@
       dest: /usr/share/nginx/html/
       remote_src: yes
 
-  - name: copy roboshop config
-    template:
-      src: roboshop.conf.j2
-      dest: /etc/nginx/default.d/roboshop.conf
   
   - name: validate nginx configuration
     command: nginx -t
-  
-  - name: start and enable nginx
-    service:
-      name: nginx
-      state: started
-      enabled: yes
-      
+
   - name: restart frontend
     service:
       name: nginx
