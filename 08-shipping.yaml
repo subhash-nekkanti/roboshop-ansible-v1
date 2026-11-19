@@ -68,3 +68,5 @@
     command: mvn clean package
     args:
       chdir: /app
+    environment:
+      MAVEN_OPTS: "-Djdk.tls.namedGroups=\"secp256r1,secp384r1,ffdhe2048\""
